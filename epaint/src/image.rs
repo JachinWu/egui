@@ -61,6 +61,15 @@ impl ColorImage {
         }
     }
 
+    pub fn from_rgb_unmultiplied(size: [usize; 2], rgb: &[u8]) -> Self {
+        assert_eq!(size[0] * size[1] * 3, rgb.len());
+        let pixels = rgb
+            .chunks_exact(3)
+            .map(|p| Color32::from_rgb(p[0], p[1], p[2]))
+            .collect();
+        Self { size, pixels }
+    }
+
     /// Create an `Image` from flat un-multiplied RGBA data.
     ///
     /// This is usually what you want to use after having loaded an image file.
